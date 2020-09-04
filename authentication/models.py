@@ -4,7 +4,7 @@ BaseUserManager)
 from utils.models import SoftDeleteModel
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, password=None):
         """
         Creates and saves a user with the given email, date
         of birth and password
@@ -13,16 +13,15 @@ class UserManager(BaseUserManager):
             raise ValueError('User must have an email address')
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
             first_name=first_name,
             last_name=last_name
         )
 
         user.set_password(password)
-        user.save(user=self._db)
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, password):
         """
         Creates and saves a Superuser with the given email, date
         of birth and password
@@ -31,14 +30,13 @@ class UserManager(BaseUserManager):
             raise ValueError('User must have an email address')
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
             first_name=first_name,
             last_name=last_name,
             password = password
         )
 
         user.is_admin = True
-        user.save(user=self._db)
+        user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser, SoftDeleteModel):
@@ -47,7 +45,7 @@ class User(AbstractBaseUser, SoftDeleteModel):
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField()
+    # date_of_birth = models.DateField()
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     is_active = models.BooleanField(default=False)
@@ -55,7 +53,7 @@ class User(AbstractBaseUser, SoftDeleteModel):
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = UserManager()
     
