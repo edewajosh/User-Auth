@@ -10,8 +10,8 @@ class BaseModel(models.Model):
 
 class SoftDeleteManager(models.Manager):
     def __init__(self, *args, **kwargs):
-        self.with_deleted = kwargs.pop('deleted', false)
-        super(SoftDeletManager, self).__init__(*args, **kwargs)
+        self.with_deleted = kwargs.pop('deleted', False)
+        super(SoftDeleteManager, self).__init__(*args, **kwargs)
 
     def _base_queryset(self):
         return super().get_queryset().filter(deleted_at=None)
@@ -27,7 +27,7 @@ class SoftDeleteModel(BaseModel):
         abstract = True
 
     objects = SoftDeleteManager()
-    objects_with_deleted = managers.softDeleteManager(deleted=True)
+    objects_with_deleted = SoftDeleteManager(deleted=True)
     
     is_deleted = models.DateTimeField(null=False, default=False)
 

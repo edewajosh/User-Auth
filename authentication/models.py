@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, 
 BaseUserManager)
-from utils.models import SoftDeletModel
+from utils.models import SoftDeleteModel
 
 class UserManager(BaseUserManager):
     def create_user(self, email, date_of_birth, first_name, last_name, password=None):
@@ -52,9 +52,12 @@ class User(AbstractBaseUser, SoftDeleteModel):
     last_name = models.CharField(max_length=150)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
+    REQUIRED_FIELDS = ['date_of_birth', 'first_name', 'last_name']
+
+    objects = UserManager()
     
     def __str__(self):
         return self.email
