@@ -21,18 +21,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, password=None):
         """
         Creates and saves a Superuser with the given email, date
         of birth and password
         """
         if not email:
             raise ValueError('User must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
+        user = self.create_user(
+            email,
             first_name=first_name,
             last_name=last_name,
-            password = password
+            password = password,
         )
 
         user.is_admin = True
@@ -50,7 +50,7 @@ class User(AbstractBaseUser, SoftDeleteModel):
     last_name = models.CharField(max_length=150)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

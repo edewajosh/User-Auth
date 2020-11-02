@@ -29,7 +29,7 @@ class SoftDeleteModel(BaseModel):
     objects = SoftDeleteManager()
     objects_with_deleted = SoftDeleteManager(deleted=True)
     
-    is_deleted = models.DateTimeField(null=False, default=False)
+    is_deleted = models.BooleanField(null=False, default=False)
 
     def delete(self):
         self.is_deleted = True
