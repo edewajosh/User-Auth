@@ -4,7 +4,7 @@ BaseUserManager)
 from utils.models import SoftDeleteModel
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, password=None, is_active=False):
         """
         Creates and saves a user with the given email, date
         of birth and password
@@ -14,7 +14,8 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             first_name=first_name,
-            last_name=last_name
+            last_name=last_name,
+            is_active = is_active,
         )
 
         user.set_password(password)
@@ -33,6 +34,7 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             password = password,
+            is_active = True,
         )
 
         user.is_admin = True
