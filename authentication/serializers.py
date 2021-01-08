@@ -4,11 +4,17 @@ from django.contrib.auth.password_validation import validate_password
 from authentication.models import User
 
 class UserSerializer(ModelSerializer):
-    password = CharField(write_only=True, required=True, validators=[validate_password])
+    password = CharField(write_only=True, required=True)
     confirm_password = CharField(write_only=True, required=True)
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'password','confirm_password', 'is_admin', 'is_active']
+
+    def validate(self, attrs):
+        print("Validation happening")
+        print(attrs['password'], attrs['confirm_password'])
+        if str(attrs['password']) != str(attrs['confirm_password']):
+            raise ValidationError({'password': 'The passwords must match'})
+        if not attrs['first_name']:
+            raise ValidationError({'first_name': 'First name cannot be empty'})
+        return attrs
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
@@ -24,7 +30,6 @@ class UserSerializer(ModelSerializer):
             user.save()
             return user
 
-    def vaildate(self, attrs):
-        if attrs.get('password') == attrs.get('confirm_password'):
-            raise ValidationError("The passwords must match")
-        return attrs
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'password','confirm_password', 'is_admin', 'is_active']
