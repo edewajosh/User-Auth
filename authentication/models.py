@@ -50,6 +50,8 @@ class User(AbstractBaseUser, SoftDeleteModel):
     # date_of_birth = models.DateField()
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
+    password = models.CharField(max_length=50)
+    confirm_password = models.CharField(max_length=50, default=password)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=True)
