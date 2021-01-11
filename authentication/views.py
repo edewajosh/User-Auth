@@ -21,20 +21,15 @@ class UserViewSet(ModelViewSet):
         """
         permission_classes = []
         if self.action == "list":
-            permission_classes = [IsAdminUser, IsStaffUser]
-            print('List action executed')
+            permission_classes = [IsAdminUser | IsStaffUser]
         elif self.action == 'retrive':
-            permission_classes = [IsAdminUser, IsStaffUser, IsOwner]
-            print('Retrieve action executed')
+            permission_classes = [IsAdminUser | IsStaffUser | IsOwner]
         elif self.action == 'delete':
-            permission_classes = [IsAdminUser, IsOwner]
-            print('Delete action executed')
+            permission_classes = [IsAdminUser | IsOwner]
         elif self.action == 'update':
-            print('Update action executed')
-            permission_classes = [IsAdminUser, IsOwner]
+            permission_classes = [IsAdminUser | IsOwner]
         elif self.action == 'partial_update':
-            print('Partial update action executed')
-            permission_classes = [IsAdminUser, IsOwner]
+            permission_classes = [IsAdminUser|IsOwner]
         else:
             pass
         return [permission() for permission in permission_classes]
