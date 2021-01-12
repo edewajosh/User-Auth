@@ -15,6 +15,10 @@ class UserViewSet(ModelViewSet):
     def destroy(self, request, pk=None):
         return Response('User has been deleted successfully')
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
     def get_permissions(self):
         """
         Instantiates and returns the list of permissions that the view requires

@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+class EnablePartialUpdateMixin:
+
+    def update(self, request, *args, **kwargs):
+        self.kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
