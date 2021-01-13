@@ -19,9 +19,10 @@ class UserViewSet(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         print(request.data, "patch")
         serialized = UserSerializer(request.user, data=request.data, partial=True)
-        #return self.update(request, *args, **kwargs)
-        serialized.save()
         return Response(status=status.HTTP_202_ACCEPTED)
+
+    def perform_create(self, serializer):
+        serializer.save()
 
     def get_permissions(self):
         """
