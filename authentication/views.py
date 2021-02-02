@@ -50,6 +50,8 @@ class UserViewSet(ModelViewSet):
             permission_classes = [IsAdminUser | IsOwner]
         elif self.action == 'partial_update':
             permission_classes = [IsAdminUser|IsOwner]
+        elif self.action == 'create':
+            permission_classes = [IsAdminUser | IsStaffUser]
         else:
             pass
         return [permission() for permission in permission_classes]
