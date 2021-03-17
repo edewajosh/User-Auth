@@ -22,7 +22,6 @@ class UserViewSet(ModelViewSet):
         send_mail(
             'Subject here',
             'Here is the message.',
-            'from@example.com',
             ['joshedewa@gmail.com'],
             fail_silently=False,
         )
@@ -65,7 +64,7 @@ class UserViewSet(ModelViewSet):
         elif self.action == 'update':
             permission_classes = [IsAdminUser | IsOwner]
         elif self.action == 'partial_update':
-            permission_classes = [IsAdminUser|IsOwner]
+            permission_classes = [IsAdminUser | IsOwner]
         elif self.action == 'create':
             permission_classes = [IsAdminUser | IsStaffUser]
         else:
