@@ -122,6 +122,13 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
 EMAIL_PORT = 587
 
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'basic': {
+#             'type': 'basic'
+#         }
+#     }
+# }
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
