@@ -4,6 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from utils.serializers import PatchModelSerializer
 from authentication.models import User
 
+
 class UserSerializer(ModelSerializer):
     password = CharField(write_only=True, required=True)
     confirm_password = CharField(write_only=True, required=True)
@@ -22,7 +23,7 @@ class UserSerializer(ModelSerializer):
         user.save()
         return user
 
-    
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password','confirm_password', 'is_admin', 'is_active', 'is_staff']
+        fields = ['first_name', 'last_name', 'email', 'password', 'confirm_password', 'is_admin', 'is_active',
+                  'is_staff']
