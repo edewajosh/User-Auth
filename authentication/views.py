@@ -57,7 +57,7 @@ class UserViewSet(ModelViewSet):
         permission_classes = []
         if self.action == "list":
             permission_classes = [IsAdminUser | IsStaffUser]
-        elif self.action == 'retrive':
+        elif self.action == 'retrieve':
             permission_classes = [IsAdminUser | IsStaffUser | IsOwner]
         elif self.action == 'delete':
             permission_classes = [IsAdminUser | IsOwner]
@@ -68,5 +68,5 @@ class UserViewSet(ModelViewSet):
         elif self.action == 'create':
             permission_classes = [IsAdminUser | IsStaffUser]
         else:
-            pass
+            permission_classes = []
         return [permission() for permission in permission_classes]
