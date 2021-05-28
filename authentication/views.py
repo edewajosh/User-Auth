@@ -11,6 +11,7 @@ from authentication.serializers import UserSerializer
 
 from authentication.models import User
 
+
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -46,9 +47,8 @@ class UserViewSet(ModelViewSet):
             # if 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance
             instance._prefetched_objects_cache = {}
-        
-        return Response(serializer.data)
 
+        return Response(serializer.data)
 
     def get_permissions(self):
         """
