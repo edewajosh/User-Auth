@@ -1,7 +1,5 @@
 from rest_framework.serializers import ModelSerializer, CharField, ValidationError
-from django.contrib.auth.password_validation import validate_password
 
-from utils.serializers import PatchModelSerializer
 from authentication.models import User
 
 
