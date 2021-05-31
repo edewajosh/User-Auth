@@ -1,5 +1,7 @@
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include, re_path
+from authentication import views
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -22,7 +24,7 @@ schema_view = get_schema_view(
 )
 
 public = True
-permission_classes=(permissions.IsAuthenticated,)
+permission_classes = (permissions.IsAuthenticated,)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,9 +35,13 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
+    # re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    #         views.activate_account, name='activate'),
+    path('activate/<slug:uidb64>/<slug:token>/', views.activate_account, name='activate'),
+
     # swagger urls
     # re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    #re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    # re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
 ]
